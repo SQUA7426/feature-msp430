@@ -1,0 +1,64 @@
+#include <msp430.h>
+#include "../base.h"
+#include "TA1.h"
+#include "event.h"
+
+
+#pragma FUNC_ALWAYS_INLINE(TA1_init)
+GLOBAL Void TA1_init(Void) {
+
+   TA1CTL   = 0; // stop mode, disable and clear flags
+   TA1CCTL0 = 0; // no capture mode, compare mode
+                 // clear and disable interrupt flag
+   TA1CCR0  = 0xFFFF;          // set up Compare Register
+   TA1EX0   = TAIDEX_0;        // set up expansion register
+   TA1CTL   = TASSEL__ACLK     // 613.75 kHz
+            | MC__UP           // Up Mode
+            | ID__1            // input divider
+            | TACLR            // clear and start Timer
+            | TAIE;            // enable interrupt
+}
+
+#define CNTMAX 5
+
+typedef enum {s0, s1} TState;
+
+LOCAL struct {
+    Int cnt;
+    TState state;
+} var1, var2;
+
+LOCAL const struct {
+    const UChar * const port;
+    const UChar mask;
+    const TEvent msg;
+} btns = {
+          {(UChar *)(&P1IN), BIT0, EVENT_BTN1},
+          {(UChar *)(&P2IN), BIT0, EVENT_BTN2}
+};
+
+#pragma vector = TIMER1_A1_VECTOR
+__interrupt Void TIMER1_A1_ISR(Void) {
+
+   /*
+    * Der Inhalt der ISR ist zu implementieren
+    */
+    CLRBIT(TA1CTL, TAIFG);
+    
+    if (TSTBIT(*btns[0].port, btns[1].mask)) {
+        if (--var1.cnt LT 0) {
+            var1.cnt = 0;
+            var1.state = s0;
+        }
+        return;
+    }
+
+    if (++var1.cnt GT CNTMAX-1) {
+        var1.cnt = CNTMAX-1;
+        if (var1.state EQ s0) {
+            var1.state = s1;
+            EVENT_set(btns[0].msg);
+            __low_power_mode_off_on_exit();
+        }
+    }
+}

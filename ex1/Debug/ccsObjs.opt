@@ -1,0 +1,8 @@
+"./Sources/TA0.obj"
+"./Sources/TA1.obj"
+"./Sources/event.obj"
+"./Sources/main.obj"
+"../lnk_msp430fr5729.cmd"
+-llibmpu_init_fr57xx.a
+-llibmath.a
+-llibc.a

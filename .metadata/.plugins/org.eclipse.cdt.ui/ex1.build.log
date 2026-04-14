@@ -1,0 +1,28 @@
+
+**** Build of configuration Debug for project ex1 ****
+
+/home/timothy/ti/ccs1281/ccs/utils/bin/gmake -k -j 11 all -O 
+ 
+Building file: "../Sources/TA1.c"
+Invoking: MSP430 Compiler
+"/home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=F5 --include_path="/home/timothy/ti/ccs1281/ccs/ccs_base/msp430/include" --include_path="/home/timothy/Documents/Micro/Exerc/ex1" --include_path="/home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430FR5729__ --define=_MPU_ENABLE -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="Sources/TA1.d_raw" --obj_directory="Sources"  "../Sources/TA1.c"
+ 
+>> Compilation failure
+Sources/subdir_rules.mk:7: recipe for target 'Sources/TA1.obj' failed
+"../Sources/TA1.c", line 36: warning #1238-D: excess initializers are ignored
+"../Sources/TA1.c", line 37: warning #1238-D: excess initializers are ignored
+"../Sources/TA1.c", line 37: warning #145-D: a value of type "UChar *" cannot be used to initialize an entity of type "const UChar"
+"../Sources/TA1.c", line 37: warning #70-D: integer conversion resulted in truncation
+"../Sources/TA1.c", line 48: error #143: expression must have pointer-to-object type
+"../Sources/TA1.c", line 48: error #143: expression must have pointer-to-object type
+"../Sources/TA1.c", line 60: error #143: expression must have pointer-to-object type
+"../Sources/TA1.c", line 51: remark #1546-D: (ULP 15.1) Detected consecutive bitfield assigns. Recommend using bit mask instead
+"../Sources/TA1.c", line 60: remark #1538-D: (ULP 10.1) ISR TIMER1_A1_ISR calls function Event_set. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../Sources/TA1.c", line 29: remark #1534-D: (ULP 7.1) Detected use of global variable "var1" within one function "TIMER1_A1_ISR". Recommend placing variable in the function locally
+"../Sources/TA1.c", line 35: remark #1534-D: (ULP 7.1) Detected use of global variable "btns" within one function "TIMER1_A1_ISR". Recommend placing variable in the function locally
+"../Sources/TA1.c", line 29: warning #179-D: variable "var2" was declared but never referenced
+3 errors detected in the compilation of "../Sources/TA1.c".
+gmake: *** [Sources/TA1.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
