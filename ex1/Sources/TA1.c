@@ -48,9 +48,8 @@ __interrupt Void TIMER1_A1_ISR(Void) {
     if (TSTBIT(*btns[0].port, btns[0].mask)) {
         if (--var1.cnt LT 0) {
             var1.cnt = 0;
-            var1.state = s0;
+            SETBIT(var1.state, s0);
         }
-        return;
     }
 
     if (++var1.cnt GT CNTMAX-1) {
@@ -61,4 +60,20 @@ __interrupt Void TIMER1_A1_ISR(Void) {
             __low_power_mode_off_on_exit();
         }
     }
+
+    if (TSTBIT(*btns[1].port, btns[1].mask)) {
+            if (--var2.cnt LT 0) {
+                var2.cnt = 0;
+                SETBIT(var2.state, s0);
+            }
+        }
+
+        if (++var2.cnt GT CNTMAX-1) {
+            var2.cnt = CNTMAX-1;
+            if (var2.state EQ s0) {
+                var2.state = s1;
+                Event_set(btns[1].msg);
+                __low_power_mode_off_on_exit();
+            }
+        }
 }

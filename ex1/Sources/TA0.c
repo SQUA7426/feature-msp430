@@ -72,7 +72,7 @@ LOCAL const UInt* mA[TABSIZE] = {
     0
 };
 
-//LOCAL const int** outerPtr;
+LOCAL volatile const UInt* outerPtr;
 LOCAL volatile const UInt* ptr;
 
 GLOBAL Void set_blink_muster(UInt arg) {
@@ -83,6 +83,12 @@ GLOBAL Void set_blink_muster(UInt arg) {
  * Datenstruktur ab.
  */
  // EVENT_BTN2 => modulo-Zaehler
+    if (arg < TABSIZE -1) {
+        outerPtr = mA[arg-1];
+    } else {
+        outerPtr = mA[0];
+    }
+    ptr = outerPtr;
 }
 
 /*
@@ -104,8 +110,8 @@ GLOBAL Void set_blink_muster(UInt arg) {
 
 #pragma FUNC_ALWAYS_INLINE(TA0_init)
 GLOBAL Void TA0_init(Void) {
-   //outerPtr = &mA[0];
-   ptr = &m6[0];
+   outerPtr = mA[0];
+   ptr = outerPtr;
    TA0CTL   = 0; // stop mode, disable and clear flags
    TA0CCTL0 = 0; // no capture mode, compare mode
                  // clear and disable interrupt flag
@@ -117,6 +123,7 @@ GLOBAL Void TA0_init(Void) {
             | TACLR         // clear and start Timer
             | TAIE          // enable interrupt
             | TAIFG;        // set interrupt flag
+   set_blink_muster(MUSTER1);
 }
 
 #pragma vector = TIMER0_A1_VECTOR
@@ -125,19 +132,17 @@ __interrupt Void TIMER0_A1_ISR(Void) {
    /*
     * Der Inhalt der ISR ist zu implementieren
     */
-    UInt cnt = *ptr;
-    if (cnt EQ 0) {
-        ptr = &m6[0];
-        cnt = *ptr;
-    }
 
-    ptr++;
+    if (*ptr EQ 0) {
+        ptr = outerPtr;
+    }
+    UInt cnt = *ptr++;
 
     if (TSTBIT(cnt, HIGH)) {
-        SETBIT(P2OUT, BIT7);
+        SETBIT(P1OUT, BIT2);
         CLRBIT(cnt, HIGH);
     } else {
-        CLRBIT(P2OUT, BIT7);
+        CLRBIT(P1OUT, BIT2);
     }
 
    CLRBIT(TA0CTL, TAIFG);
