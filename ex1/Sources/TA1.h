@@ -1,7 +1,7 @@
 #ifndef TA1_H_
 #define TA1_H_
 
-#include "../base.h"
+#include "..\base.h"
 
 EXTERN inline Void TA1_init(Void);
 

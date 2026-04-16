@@ -1,7 +1,7 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
-#include "../base.h"
+#include "..\base.h"
 
 typedef unsigned int TEvent;
 

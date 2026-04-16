@@ -1,5 +1,5 @@
 #include <msp430.h>
-#include "../base.h"
+#include "..\base.h"
 #include "TA1.h"
 #include "event.h"
 
@@ -32,7 +32,7 @@ LOCAL const struct {
     const UChar * const port;
     const UChar mask;
     const TEvent msg;
-} btns = {
+} btns[2] = {
           {(UChar *)(&P1IN), BIT0, EVENT_BTN1},
           {(UChar *)(&P2IN), BIT0, EVENT_BTN2}
 };

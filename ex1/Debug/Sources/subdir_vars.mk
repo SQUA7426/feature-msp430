@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
+SHELL = cmd.exe
+
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Sources/TA0.c \
@@ -22,16 +24,16 @@ OBJS += \
 ./Sources/main.obj 
 
 OBJS__QUOTED += \
-"Sources/TA0.obj" \
-"Sources/TA1.obj" \
-"Sources/event.obj" \
-"Sources/main.obj" 
+"Sources\TA0.obj" \
+"Sources\TA1.obj" \
+"Sources\event.obj" \
+"Sources\main.obj" 
 
 C_DEPS__QUOTED += \
-"Sources/TA0.d" \
-"Sources/TA1.d" \
-"Sources/event.d" \
-"Sources/main.d" 
+"Sources\TA0.d" \
+"Sources\TA1.d" \
+"Sources\event.d" \
+"Sources\main.d" 
 
 C_SRCS__QUOTED += \
 "../Sources/TA0.c" \

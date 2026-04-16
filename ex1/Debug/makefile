@@ -2,7 +2,9 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -16,12 +18,11 @@ ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
 -llibmpu_init_fr57xx.a \
 -llibmath.a \
--llibc.a \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -139,15 +140,15 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 ex1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"/home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --use_hw_mpy=F5 --advice:power=all --define=__MSP430FR5729__ --define=_MPU_ENABLE -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 -z -m"ex1.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"/home/timothy/ti/ccs1281/ccs/ccs_base/msp430/include" -i"/home/timothy/ti/ccs1281/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/home/timothy/ti/ccs1281/ccs/ccs_base/msp430/lib/FR57xx" -i"/home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"/home/timothy/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --priority --reread_libs --define=_MPU_ENABLE --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ex1_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "ex1.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmspx --code_model=small -O4 --opt_for_speed=0 --use_hw_mpy=F5 --advice:power="all" --define=__MSP430FR5729__ -g --c99 --float_operations_allowed=none --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --gen_data_subsections=on --enum_type=packed --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --call_assumptions=3 --auto_inline=100 -z -m"ex1.map" --heap_size=0 --stack_size=80 --cinit_hold_wdt=off -i"C:/ti/ccs1281/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1281/ccs/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccs1281/ccs/ccs_base/msp430/lib/FR57xx" -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --priority --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ex1_linkInfo.xml" --use_hw_mpy=F5 --arg_size=0 --cinit_compression=off --copy_compression=off --rom_model --unused_section_elimination=on --zero_init=off -o "ex1.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Sources/TA0.obj" "Sources/TA1.obj" "Sources/event.obj" "Sources/main.obj" 
-	-$(RM) "Sources/TA0.d" "Sources/TA1.d" "Sources/event.d" "Sources/main.d" 
+	-$(RM) "Sources\TA0.obj" "Sources\TA1.obj" "Sources\event.obj" "Sources\main.obj" 
+	-$(RM) "Sources\TA0.d" "Sources\TA1.d" "Sources\event.d" "Sources\main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
