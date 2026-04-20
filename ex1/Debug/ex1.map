@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v21.6.1                     
 ******************************************************************************
->> Linked Thu Apr 16 18:59:37 2026
+>> Linked Mon Apr 20 17:37:57 2026
 
 OUTPUT FILE NAME:   <ex1.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 0000c664
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 0000c672
 
 
 MEMORY CONFIGURATION
@@ -16,8 +16,8 @@ MEMORY CONFIGURATION
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
   INFOB                 00001800   00000080  00000000  00000080  RWIX
   INFOA                 00001880   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000400  00000070  00000390  RWIX
-  FRAM                  0000c200   00003d80  000004bc  000038c4  RWIX
+  RAM                   00001c00   00000400  0000006e  00000392  RWIX
+  FRAM                  0000c200   00003d80  000004ca  000038b6  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -91,45 +91,45 @@ section   page    origin      length       input sections
 
 .sysmem    0    0000c200    00000000     UNINITIALIZED
 
-.cinit     0    0000c200    00000018     
-                  0000c200    00000012     (.cinit..data.load) [load image]
-                  0000c212    00000002     (__TI_handler_table)
-                  0000c214    00000004     (__TI_cinit_table)
+.cinit     0    0000c200    00000016     
+                  0000c200    00000010     (.cinit..data.load) [load image]
+                  0000c210    00000002     (__TI_handler_table)
+                  0000c212    00000004     (__TI_cinit_table)
 
-.pinit     0    0000c218    00000000     UNINITIALIZED
+.pinit     0    0000c216    00000000     UNINITIALIZED
 
-.binit     0    0000c218    00000000     
+.binit     0    0000c216    00000000     
 
 .init_array 
-*          0    0000c218    00000000     UNINITIALIZED
+*          0    0000c216    00000000     UNINITIALIZED
 
 .mspabi.exidx 
-*          0    0000c218    00000000     UNINITIALIZED
+*          0    0000c216    00000000     UNINITIALIZED
 
 .mspabi.extab 
-*          0    0000c218    00000000     UNINITIALIZED
+*          0    0000c216    00000000     UNINITIALIZED
 
-.const     0    0000c218    00000042     
-                  0000c218    00000010     TA0.obj (.const:m6$0)
-                  0000c228    0000000c     TA1.obj (.const:btns$1)
-                  0000c234    0000000c     TA0.obj (.const:m5$0)
-                  0000c240    00000008     TA0.obj (.const:m4$0)
-                  0000c248    00000006     TA0.obj (.const:m1$0)
-                  0000c24e    00000006     TA0.obj (.const:m2$0)
-                  0000c254    00000006     TA0.obj (.const:m3$0)
+.const     0    0000c216    00000042     
+                  0000c216    00000010     TA0.obj (.const:m6$0)
+                  0000c226    0000000c     TA1.obj (.const:btns$1)
+                  0000c232    0000000c     TA0.obj (.const:m5$0)
+                  0000c23e    00000008     TA0.obj (.const:m4$0)
+                  0000c246    00000006     TA0.obj (.const:m1$0)
+                  0000c24c    00000006     TA0.obj (.const:m2$0)
+                  0000c252    00000006     TA0.obj (.const:m3$0)
 
-.text      0    0000c400    000002bc     
-                  0000c400    00000152     main.obj (.text:main)
-                  0000c552    0000009a     TA1.obj (.text:TIMER1_A1_ISR)
-                  0000c5ec    0000003e     rts430x_sc_sd_eabi_se.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
-                  0000c62a    0000003a     TA0.obj (.text:TIMER0_A1_ISR)
-                  0000c664    0000001c     rts430x_sc_sd_eabi_se.lib : boot.c.obj (.text:_c_int00_noargs)
-                  0000c680    00000012                               : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  0000c692    00000010                               : memcpy.c.obj (.text:memcpy)
-                  0000c6a2    0000000a     main.obj (.text:_system_pre_init)
-                  0000c6ac    00000008     rts430x_sc_sd_eabi_se.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
-                  0000c6b4    00000006                               : exit.c.obj (.text:abort)
-                  0000c6ba    00000002                               : startup.c.obj (.text:_system_post_cinit)
+.text      0    0000c400    000002ca     
+                  0000c400    0000015c     main.obj (.text:main)
+                  0000c55c    0000009a     TA1.obj (.text:TIMER1_A1_ISR)
+                  0000c5f6    0000003e     TA0.obj (.text:TIMER0_A1_ISR)
+                  0000c634    0000003e     rts430x_sc_sd_eabi_se.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  0000c672    0000001c                               : boot.c.obj (.text:_c_int00_noargs)
+                  0000c68e    00000012                               : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  0000c6a0    00000010                               : memcpy.c.obj (.text:memcpy)
+                  0000c6b0    0000000a     main.obj (.text:_system_pre_init)
+                  0000c6ba    00000008     rts430x_sc_sd_eabi_se.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+                  0000c6c2    00000006                               : exit.c.obj (.text:abort)
+                  0000c6c8    00000002                               : startup.c.obj (.text:_system_post_cinit)
 
 .bss       0    00001c00    00000012     UNINITIALIZED
                   00001c00    00000006     event.obj (.bss:evn$2)
@@ -137,8 +137,8 @@ section   page    origin      length       input sections
                   00001c0a    00000004     TA1.obj (.bss:var1$1)
                   00001c0e    00000004     TA1.obj (.bss:var2$1)
 
-.data      0    00001c12    0000000e     UNINITIALIZED
-                  00001c12    0000000e     TA0.obj (.data:mA$0)
+.data      0    00001c12    0000000c     UNINITIALIZED
+                  00001c12    0000000c     TA0.obj (.data:mA$0)
 
 .stack     0    00001fb0    00000050     UNINITIALIZED
                   00001fb0    00000002     rts430x_sc_sd_eabi_se.lib : boot.c.obj (.stack)
@@ -243,15 +243,15 @@ MODULE SUMMARY
        Module                                   code   ro data   rw data
        ------                                   ----   -------   -------
     .\Sources\
-       main.obj                                 348    0         0      
+       main.obj                                 358    0         0      
        TA1.obj                                  154    12        8      
-       TA0.obj                                  58     54        18     
+       TA0.obj                                  62     54        16     
        event.obj                                0      0         6      
     +--+----------------------------------------+------+---------+---------+
-       Total:                                   560    66        32     
+       Total:                                   574    66        30     
                                                                         
-    C:\Users\ti451dre\AppData\Local\Temp\
-       {678CEC5D-0E5B-48CD-91E9-5527C321E903}   0      4         0      
+    C:\Users\Timothy\AppData\Local\Temp\
+       {C85950DF-5A60-46F2-A91E-79D4AB78A5C2}   0      4         0      
     +--+----------------------------------------+------+---------+---------+
        Total:                                   0      4         0      
                                                                         
@@ -289,20 +289,20 @@ MODULE SUMMARY
        Total:                                   140    46        0      
                                                                         
        Stack:                                   0      0         80     
-       Linker Generated:                        0      24        0      
+       Linker Generated:                        0      22        0      
     +--+----------------------------------------+------+---------+---------+
-       Grand Total:                             700    140       112    
+       Grand Total:                             714    138       110    
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000c214 records: 1, size/record: 4, table size: 4
-	.data: load addr=0000c200, load size=00000012 bytes, run addr=00001c12, run size=0000000e bytes, compression=copy
+__TI_cinit_table @ 0000c212 records: 1, size/record: 4, table size: 4
+	.data: load addr=0000c200, load size=00000010 bytes, run addr=00001c12, run size=0000000c bytes, compression=copy
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000c212 records: 1, size/record: 2, table size: 2
+__TI_handler_table @ 0000c210 records: 1, size/record: 2, table size: 2
 	index: 0, handler: __TI_decompress_none
 
 
@@ -342,7 +342,7 @@ address   name
 00000712  ADC10MEM0_L                   
 000004be  BCD2BIN                       
 000004bc  BIN2BCD                       
-0000c6b4  C$$EXIT                       
+0000c6c2  C$$EXIT                       
 000008c0  CDCTL0                        
 000008c1  CDCTL0_H                      
 000008c0  CDCTL0_L                      
@@ -737,8 +737,8 @@ address   name
 00000460  TB2EX0                        
 0000046e  TB2IV                         
 00000450  TB2R                          
-0000c62a  TIMER0_A1_ISR                 
-0000c552  TIMER1_A1_ISR                 
+0000c5f6  TIMER0_A1_ISR                 
+0000c55c  TIMER1_A1_ISR                 
 000005d0  UCA0ABCTL                     
 000005c6  UCA0BRW                       
 000005c7  UCA0BRW_H                     
@@ -853,14 +853,14 @@ address   name
 0000015c  WDTCTL_L                      
 00002000  __STACK_END                   
 00000050  __STACK_SIZE                  
-0000c214  __TI_CINIT_Base               
-0000c218  __TI_CINIT_Limit              
-0000c218  __TI_CINIT_Warm               
-0000c212  __TI_Handler_Table_Base       
-0000c214  __TI_Handler_Table_Limit      
-0000c6ac  __TI_ISR_TRAP                 
-0000c5ec  __TI_auto_init_nobinit_nopinit
-0000c680  __TI_decompress_none          
+0000c212  __TI_CINIT_Base               
+0000c216  __TI_CINIT_Limit              
+0000c216  __TI_CINIT_Warm               
+0000c210  __TI_Handler_Table_Base       
+0000c212  __TI_Handler_Table_Limit      
+0000c6ba  __TI_ISR_TRAP                 
+0000c634  __TI_auto_init_nobinit_nopinit
+0000c68e  __TI_decompress_none          
 0000ffce  __TI_int31                    
 0000ffd0  __TI_int32                    
 0000ffd2  __TI_int33                    
@@ -889,17 +889,17 @@ ffffffff  __TI_pprof_out_hndl
 ffffffff  __TI_prof_data_size           
 ffffffff  __TI_prof_data_start          
 ffffffff  __c_args__                    
-0000c664  _c_int00_noargs               
+0000c672  _c_int00_noargs               
 0000fffe  _reset_vector                 
 00001fb0  _stack                        
-0000c6ba  _system_post_cinit            
-0000c6a2  _system_pre_init              
-0000c6b4  abort                         
+0000c6c8  _system_post_cinit            
+0000c6b0  _system_pre_init              
+0000c6c2  abort                         
 0000c200  fram_ro_start                 
 0000c200  fram_rw_start                 
 0000c400  fram_rx_start                 
 0000c400  main                          
-0000c692  memcpy                        
+0000c6a0  memcpy                        
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -1449,24 +1449,24 @@ address   name
 00002000  __STACK_END                   
 0000c200  fram_ro_start                 
 0000c200  fram_rw_start                 
-0000c212  __TI_Handler_Table_Base       
-0000c214  __TI_CINIT_Base               
-0000c214  __TI_Handler_Table_Limit      
-0000c218  __TI_CINIT_Limit              
-0000c218  __TI_CINIT_Warm               
+0000c210  __TI_Handler_Table_Base       
+0000c212  __TI_CINIT_Base               
+0000c212  __TI_Handler_Table_Limit      
+0000c216  __TI_CINIT_Limit              
+0000c216  __TI_CINIT_Warm               
 0000c400  fram_rx_start                 
 0000c400  main                          
-0000c552  TIMER1_A1_ISR                 
-0000c5ec  __TI_auto_init_nobinit_nopinit
-0000c62a  TIMER0_A1_ISR                 
-0000c664  _c_int00_noargs               
-0000c680  __TI_decompress_none          
-0000c692  memcpy                        
-0000c6a2  _system_pre_init              
-0000c6ac  __TI_ISR_TRAP                 
-0000c6b4  C$$EXIT                       
-0000c6b4  abort                         
-0000c6ba  _system_post_cinit            
+0000c55c  TIMER1_A1_ISR                 
+0000c5f6  TIMER0_A1_ISR                 
+0000c634  __TI_auto_init_nobinit_nopinit
+0000c672  _c_int00_noargs               
+0000c68e  __TI_decompress_none          
+0000c6a0  memcpy                        
+0000c6b0  _system_pre_init              
+0000c6ba  __TI_ISR_TRAP                 
+0000c6c2  C$$EXIT                       
+0000c6c2  abort                         
+0000c6c8  _system_post_cinit            
 0000ffce  __TI_int31                    
 0000ffd0  __TI_int32                    
 0000ffd2  __TI_int33                    
