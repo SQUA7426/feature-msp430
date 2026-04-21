@@ -11,47 +11,31 @@
 #define LOW     0x0000
 
 #define ACKFRQ  613.75 // kHz
-#define TICK(t) ((UInt)(((ACKFRQ * t) / 8.0) / 6.0) - 1)
+#define TICK(t) ((UInt)(((ACKFRQ * t) / 4.0) / 5.0) - 1)
 #define T_TICK 500
 
-#define M1_SIZE 3
-#define M2_SIZE 3
-#define M3_SIZE 3
-#define M4_SIZE 4
-#define M5_SIZE 6
-#define M6_SIZE 8
+#define SIZE 36
 #define TABSIZE 6
-
-LOCAL const UInt m1[M1_SIZE] = {
+LOCAL const UInt* mA[SIZE] = {
     HIGH | TICK(T_TICK * 4),
     LOW  | TICK(T_TICK * 1),
-    0
-};
-LOCAL const UInt m2[M2_SIZE] = {
+    0,
     HIGH | TICK(T_TICK * 15e-1),
     LOW  | TICK(T_TICK * 15e-1),
-    0
-};
-LOCAL const UInt m3[M3_SIZE] = {
+    0,
     HIGH | TICK(T_TICK * 5e-1),
     LOW  | TICK(T_TICK * 5e-1),
-    0
-};
-LOCAL const UInt m4[M4_SIZE] = {
+    0,
     LOW  | TICK(T_TICK * 1),
     HIGH | TICK(T_TICK * 1),
     LOW  | TICK(T_TICK * 5),
-    0
-};
-LOCAL const UInt m5[M5_SIZE] = {
+    0,
     LOW  | TICK(T_TICK * 1),
     HIGH | TICK(T_TICK * 1),
     LOW  | TICK(T_TICK * 1),
     HIGH | TICK(T_TICK * 1),
     LOW  | TICK(T_TICK * 5),
-    0
-};
-LOCAL const UInt m6[M6_SIZE] = {
+    0,
     LOW  | TICK(T_TICK * 1),
     HIGH | TICK(T_TICK * 1),
     LOW  | TICK(T_TICK * 1),
@@ -60,15 +44,6 @@ LOCAL const UInt m6[M6_SIZE] = {
     HIGH | TICK(T_TICK * 1),
     LOW  | TICK(T_TICK * 5),
     0
-};
-
-LOCAL const UInt* mA[TABSIZE] = {
-    m1,
-    m2,
-    m3,
-    m4,
-    m5,
-    m6
 };
 
 LOCAL const UInt* outerPtr;
@@ -122,6 +97,7 @@ GLOBAL Void TA0_init(Void) {
             | TACLR         // clear and start Timer
             | TAIE          // enable interrupt
             | TAIFG;        // set interrupt flag
+   set_blink_muster(MUSTER1);
 }
 
 #pragma vector = TIMER0_A1_VECTOR
