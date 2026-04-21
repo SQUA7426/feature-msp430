@@ -6,66 +6,7 @@
  * Man soll sich eine geeignete Datenstruktur �berlegen,
  * die eine laufzeiteffiziente Ausf�hrung der ISR erm�glicht.
  *
-*/
-#define HIGH    0x8000
-#define LOW     0x0000
-
-#define ACKFRQ  613.75 // kHz
-#define TICK(t) ((UInt)(((ACKFRQ * t) / 4.0) / 5.0) - 1)
-#define T_TICK 500
-
-#define SIZE 36
-#define TABSIZE 6
-LOCAL const UInt* mA[SIZE] = {
-    HIGH | TICK(T_TICK * 4),
-    LOW  | TICK(T_TICK * 1),
-    0,
-    HIGH | TICK(T_TICK * 15e-1),
-    LOW  | TICK(T_TICK * 15e-1),
-    0,
-    HIGH | TICK(T_TICK * 5e-1),
-    LOW  | TICK(T_TICK * 5e-1),
-    0,
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 5),
-    0,
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 5),
-    0,
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 1),
-    HIGH | TICK(T_TICK * 1),
-    LOW  | TICK(T_TICK * 5),
-    0
-};
-
-LOCAL const UInt* outerPtr;
-LOCAL const UInt* ptr;
-
-GLOBAL Void set_blink_muster(UInt arg) {
-/*
- * Die Funktion muss so erweitert werden,
- * dass ein Blinkmuster selektiert wird.
- * Diese L�sung h�ngt stark von der gew�hlten
- * Datenstruktur ab.
- */
- // EVENT_BTN2 => modulo-Zaehler
-    if (arg < TABSIZE -1) {
-        outerPtr = mA[arg-1];
-    } else {
-        outerPtr = mA[0];
-    }
-    ptr = outerPtr;
-}
-
-/*
+*
 * times = [2500, 1500, 500, 2500, 3500, 4500] (ms)
 * timespan = 2000 ms
 * Timer_clock = = 613.75 kHz =ACKFRQ
@@ -77,15 +18,71 @@ GLOBAL Void set_blink_muster(UInt arg) {
 * => IDEX = 5
 *
 * CCR0 = Teilungsfaktor / (ID * IDEX) =  61_377
-* TA0CCR0 = 57_540 - 1 = 61_376
-* => hex(57_539) = 0xefc0
+* TA0CCR0 = 61_377 - 1 = 61_376
+* => hex(61_376) = 0xefc0
 */
 #define CCR0_res 0xefc0
 
+#define HIGH    0x8000
+#define LOW     0x0000
+
+#define ACKFRQ  613.75 // kHz
+#define TICK(t) ((UInt)(((ACKFRQ * t) / 4.0) / 5.0) - 1)
+
+#define TABSIZE 6
+LOCAL const UInt mA[] = {
+    HIGH | TICK(2000), // 0
+    LOW  | TICK(500),
+    0,
+    HIGH | TICK(750), // 3
+    LOW  | TICK(750),
+    0,
+    HIGH | TICK(250), // 6
+    LOW  | TICK(250),
+    0,
+    LOW  | TICK(500), // 9
+    HIGH | TICK(500),
+    LOW  | TICK(1500),
+    0,
+    LOW  | TICK(500), // 13
+    HIGH | TICK(500),
+    LOW  | TICK(500),
+    HIGH | TICK(500),
+    LOW  | TICK(1500),
+    0,
+    LOW  | TICK(500), // 19
+    HIGH | TICK(500),
+    LOW  | TICK(500),
+    HIGH | TICK(500),
+    LOW  | TICK(500),
+    HIGH | TICK(500),
+    LOW  | TICK(1500),
+    0
+};
+
+LOCAL const UInt starts[TABSIZE] = {
+    0, 3, 6, 9, 13, 19
+};
+
+LOCAL UInt starting;
+LOCAL UInt ptr;
+
+GLOBAL Void set_blink_muster(UInt arg) {
+/*
+ * Die Funktion muss so erweitert werden,
+ * dass ein Blinkmuster selektiert wird.
+ * Diese L�sung h�ngt stark von der gew�hlten
+ * Datenstruktur ab.
+ */
+ // EVENT_BTN2 => modulo-Zaehler
+    starting = starts[arg];
+    ptr = mA[starting];
+}
+
 #pragma FUNC_ALWAYS_INLINE(TA0_init)
 GLOBAL Void TA0_init(Void) {
-   outerPtr = mA[0];
-   ptr = outerPtr;
+    starting = starts[0];
+    ptr = mA[starting];
    TA0CTL   = 0; // stop mode, disable and clear flags
    TA0CCTL0 = 0; // no capture mode, compare mode
                  // clear and disable interrupt flag
@@ -107,16 +104,16 @@ __interrupt Void TIMER0_A1_ISR(Void) {
     * Der Inhalt der ISR ist zu implementieren
     */
 
-    if (*ptr EQ 0) {
-        ptr = outerPtr;
+    if (ptr EQ 0) {
+        ptr = starting;
     }
-    UInt cnt = *ptr++;
+    UInt cnt = mA[ptr++];
 
     if (TSTBIT(cnt, HIGH)) {
-        SETBIT(P1OUT, BIT7);
+        SETBIT(P2OUT, BIT7);
         CLRBIT(cnt, HIGH);
     } else {
-        CLRBIT(P1OUT, BIT7);
+        CLRBIT(P2OUT, BIT7);
     }
 
    CLRBIT(TA0CTL, TAIFG);

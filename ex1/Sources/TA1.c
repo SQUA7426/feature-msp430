@@ -4,21 +4,6 @@
 #include "event.h"
 
 
-#pragma FUNC_ALWAYS_INLINE(TA1_init)
-GLOBAL Void TA1_init(Void) {
-
-   TA1CTL   = 0; // stop mode, disable and clear flags
-   TA1CCTL0 = 0; // no capture mode, compare mode
-                 // clear and disable interrupt flag
-   TA1CCR0  = 0xFFFF;          // set up Compare Register
-   TA1EX0   = TAIDEX_0;        // set up expansion register
-   TA1CTL   = TASSEL__ACLK     // 613.75 kHz
-            | MC__UP           // Up Mode
-            | ID__1            // input divider
-            | TACLR            // clear and start Timer
-            | TAIE;            // enable interrupt
-}
-
 #define CNTMAX 5
 
 typedef enum {s0, s1} TState;
@@ -37,14 +22,31 @@ LOCAL const struct {
           {(UChar *)(&P2IN), BIT0, EVENT_BTN2}
 };
 
+#pragma FUNC_ALWAYS_INLINE(TA1_init)
+GLOBAL Void TA1_init(Void) {
+   var1.cnt = 0;
+   SETBIT(var1.state, s0);
+
+   var2.cnt = 0;
+   SETBIT(var2.state, s0);
+   TA1CTL   = 0; // stop mode, disable and clear flags
+   TA1CCTL0 = C; // no capture mode, compare mode
+                 // clear and disable interrupt flag
+   TA1CCR0  = 0xFFFF;          // set up Compare Register
+   TA1EX0   = TAIDEX_0;        // set up expansion register
+   TA1CTL   = TASSEL__ACLK     // 613.75 kHz
+            | MC__UP           // Up Mode
+            | ID__1            // input divider
+            | TACLR            // clear and start Timer
+            | TAIE;            // enable interrupt
+}
+
 #pragma vector = TIMER1_A1_VECTOR
 __interrupt Void TIMER1_A1_ISR(Void) {
 
    /*
     * Der Inhalt der ISR ist zu implementieren
     */
-    CLRBIT(TA1CTL, TAIFG);
-    
     if (TSTBIT(*btns[0].port, btns[0].mask)) {
         if (--var1.cnt LT 0) {
             var1.cnt = 0;
@@ -68,12 +70,13 @@ __interrupt Void TIMER1_A1_ISR(Void) {
             }
         }
 
-        if (++var2.cnt GT CNTMAX-1) {
-            var2.cnt = CNTMAX-1;
-            if (var2.state EQ s0) {
-                var2.state = s1;
-                Event_set(btns[1].msg);
-                __low_power_mode_off_on_exit();
-            }
-        }
+     if (++var2.cnt GT CNTMAX-1) {
+         var2.cnt = CNTMAX-1;
+         if (var2.state EQ s0) {
+             var2.state = s1;
+             Event_set(btns[1].msg);
+             __low_power_mode_off_on_exit();
+         }
+     }
+     CLRBIT(TA1CTL, TAIFG);
 }
