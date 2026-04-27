@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v21.6.1                     
 ******************************************************************************
->> Linked Tue Apr 21 12:33:40 2026
+>> Linked Mon Apr 27 15:47:27 2026
 
 OUTPUT FILE NAME:   <ex1.out>
-ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c634
+ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c61e
 
 
 MEMORY CONFIGURATION
@@ -16,8 +16,8 @@ MEMORY CONFIGURATION
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
   INFOB                 00001800   00000080  00000000  00000080  RWIX
   INFOA                 00001880   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000400  00000062  0000039e  RWIX
-  FRAM                  0000c200   00003d80  00000460  00003920  RWIX
+  RAM                   00001c00   00000400  0000005f  000003a1  RWIX
+  FRAM                  0000c200   00003d80  0000044a  00003936  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -106,60 +106,61 @@ section   page    origin      length       input sections
 .mspabi.extab 
 *          0    0000c200    00000000     UNINITIALIZED
 
-.const     0    0000c200    0000004e     
-                  0000c200    00000036     TA0.obj (.const:mA$0)
+.const     0    0000c200    00000048     
+                  0000c200    00000036     TA0.obj (.const:ma$0)
                   0000c236    0000000c     TA1.obj (.const:btns$1)
-                  0000c242    0000000c     TA0.obj (.const:starts$0)
+                  0000c242    00000006     TA0.obj (.const:.string:startpts$0)
 
-.text      0    0000c400    00000260     
+.text      0    0000c400    0000024a     
                   0000c400    0000015c     main.obj (.text:main)
-                  0000c55c    0000009a     TA1.obj (.text:TIMER1_A1_ISR)
-                  0000c5f6    0000003e     TA0.obj (.text:TIMER0_A1_ISR)
-                  0000c634    00000014     rts430x_sc_sd_eabi_se.lib : boot.c.obj (.text:_c_int00_noinit_noargs)
-                  0000c648    0000000a     main.obj (.text:_system_pre_init)
-                  0000c652    00000008     rts430x_sc_sd_eabi_se.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
-                  0000c65a    00000006                               : exit.c.obj (.text:abort)
+                  0000c55c    0000006c     TA1.obj (.text:_isr:TIMER1_A1_ISR)
+                  0000c5c8    0000003e     TA0.obj (.text:_isr:TIMER0_A1_ISR)
+                  0000c606    00000018     rts430x_lc_sd_eabi_se.lib : mult16_f5hw.asm.obj (.text)
+                  0000c61e    00000014                               : boot.c.obj (.text:_isr:_c_int00_noinit_noargs)
+                  0000c632    0000000a     main.obj (.text:_system_pre_init)
+                  0000c63c    00000008     rts430x_lc_sd_eabi_se.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+                  0000c644    00000006                               : exit.c.obj (.text:abort)
 
-.bss       0    00001c00    00000012     UNINITIALIZED
+.bss       0    00001c00    0000000f     UNINITIALIZED
                   00001c00    00000006     event.obj (.bss:evn$2)
                   00001c06    00000004     TA0.obj (.bss)
-                  00001c0a    00000004     TA1.obj (.bss:var1$1)
-                  00001c0e    00000004     TA1.obj (.bss:var2$1)
+                  00001c0a    00000004     TA1.obj (.bss:vars$1)
+                  00001c0e    00000001     TA1.obj (.bss)
 
 .stack     0    00001fb0    00000050     UNINITIALIZED
-                  00001fb0    00000002     rts430x_sc_sd_eabi_se.lib : boot.c.obj (.stack)
+                  00001fb0    00000002     rts430x_lc_sd_eabi_se.lib : boot.c.obj (.stack)
                   00001fb2    0000004e     --HOLE--
 
 RTC        0    0000ffce    00000002     
-                  0000ffce    00000002     rts430x_sc_sd_eabi_se.lib : int31.asm.obj (.int31)
+                  0000ffce    00000002     rts430x_lc_sd_eabi_se.lib : int31.asm.obj (.int31)
 
 PORT4      0    0000ffd0    00000002     
-                  0000ffd0    00000002     rts430x_sc_sd_eabi_se.lib : int32.asm.obj (.int32)
+                  0000ffd0    00000002     rts430x_lc_sd_eabi_se.lib : int32.asm.obj (.int32)
 
 PORT3      0    0000ffd2    00000002     
-                  0000ffd2    00000002     rts430x_sc_sd_eabi_se.lib : int33.asm.obj (.int33)
+                  0000ffd2    00000002     rts430x_lc_sd_eabi_se.lib : int33.asm.obj (.int33)
 
 TIMER2_B1 
 *          0    0000ffd4    00000002     
-                  0000ffd4    00000002     rts430x_sc_sd_eabi_se.lib : int34.asm.obj (.int34)
+                  0000ffd4    00000002     rts430x_lc_sd_eabi_se.lib : int34.asm.obj (.int34)
 
 TIMER2_B0 
 *          0    0000ffd6    00000002     
-                  0000ffd6    00000002     rts430x_sc_sd_eabi_se.lib : int35.asm.obj (.int35)
+                  0000ffd6    00000002     rts430x_lc_sd_eabi_se.lib : int35.asm.obj (.int35)
 
 PORT2      0    0000ffd8    00000002     
-                  0000ffd8    00000002     rts430x_sc_sd_eabi_se.lib : int36.asm.obj (.int36)
+                  0000ffd8    00000002     rts430x_lc_sd_eabi_se.lib : int36.asm.obj (.int36)
 
 TIMER1_B1 
 *          0    0000ffda    00000002     
-                  0000ffda    00000002     rts430x_sc_sd_eabi_se.lib : int37.asm.obj (.int37)
+                  0000ffda    00000002     rts430x_lc_sd_eabi_se.lib : int37.asm.obj (.int37)
 
 TIMER1_B0 
 *          0    0000ffdc    00000002     
-                  0000ffdc    00000002     rts430x_sc_sd_eabi_se.lib : int38.asm.obj (.int38)
+                  0000ffdc    00000002     rts430x_lc_sd_eabi_se.lib : int38.asm.obj (.int38)
 
 PORT1      0    0000ffde    00000002     
-                  0000ffde    00000002     rts430x_sc_sd_eabi_se.lib : int39.asm.obj (.int39)
+                  0000ffde    00000002     rts430x_lc_sd_eabi_se.lib : int39.asm.obj (.int39)
 
 TIMER1_A1 
 *          0    0000ffe0    00000002     
@@ -167,13 +168,13 @@ TIMER1_A1
 
 TIMER1_A0 
 *          0    0000ffe2    00000002     
-                  0000ffe2    00000002     rts430x_sc_sd_eabi_se.lib : int41.asm.obj (.int41)
+                  0000ffe2    00000002     rts430x_lc_sd_eabi_se.lib : int41.asm.obj (.int41)
 
 DMA        0    0000ffe4    00000002     
-                  0000ffe4    00000002     rts430x_sc_sd_eabi_se.lib : int42.asm.obj (.int42)
+                  0000ffe4    00000002     rts430x_lc_sd_eabi_se.lib : int42.asm.obj (.int42)
 
 USCI_A1    0    0000ffe6    00000002     
-                  0000ffe6    00000002     rts430x_sc_sd_eabi_se.lib : int43.asm.obj (.int43)
+                  0000ffe6    00000002     rts430x_lc_sd_eabi_se.lib : int43.asm.obj (.int43)
 
 TIMER0_A1 
 *          0    0000ffe8    00000002     
@@ -181,39 +182,39 @@ TIMER0_A1
 
 TIMER0_A0 
 *          0    0000ffea    00000002     
-                  0000ffea    00000002     rts430x_sc_sd_eabi_se.lib : int45.asm.obj (.int45)
+                  0000ffea    00000002     rts430x_lc_sd_eabi_se.lib : int45.asm.obj (.int45)
 
 ADC10      0    0000ffec    00000002     
-                  0000ffec    00000002     rts430x_sc_sd_eabi_se.lib : int46.asm.obj (.int46)
+                  0000ffec    00000002     rts430x_lc_sd_eabi_se.lib : int46.asm.obj (.int46)
 
 USCI_B0    0    0000ffee    00000002     
-                  0000ffee    00000002     rts430x_sc_sd_eabi_se.lib : int47.asm.obj (.int47)
+                  0000ffee    00000002     rts430x_lc_sd_eabi_se.lib : int47.asm.obj (.int47)
 
 USCI_A0    0    0000fff0    00000002     
-                  0000fff0    00000002     rts430x_sc_sd_eabi_se.lib : int48.asm.obj (.int48)
+                  0000fff0    00000002     rts430x_lc_sd_eabi_se.lib : int48.asm.obj (.int48)
 
 WDT        0    0000fff2    00000002     
-                  0000fff2    00000002     rts430x_sc_sd_eabi_se.lib : int49.asm.obj (.int49)
+                  0000fff2    00000002     rts430x_lc_sd_eabi_se.lib : int49.asm.obj (.int49)
 
 TIMER0_B1 
 *          0    0000fff4    00000002     
-                  0000fff4    00000002     rts430x_sc_sd_eabi_se.lib : int50.asm.obj (.int50)
+                  0000fff4    00000002     rts430x_lc_sd_eabi_se.lib : int50.asm.obj (.int50)
 
 TIMER0_B0 
 *          0    0000fff6    00000002     
-                  0000fff6    00000002     rts430x_sc_sd_eabi_se.lib : int51.asm.obj (.int51)
+                  0000fff6    00000002     rts430x_lc_sd_eabi_se.lib : int51.asm.obj (.int51)
 
 COMP_D     0    0000fff8    00000002     
-                  0000fff8    00000002     rts430x_sc_sd_eabi_se.lib : int52.asm.obj (.int52)
+                  0000fff8    00000002     rts430x_lc_sd_eabi_se.lib : int52.asm.obj (.int52)
 
 UNMI       0    0000fffa    00000002     
-                  0000fffa    00000002     rts430x_sc_sd_eabi_se.lib : int53.asm.obj (.int53)
+                  0000fffa    00000002     rts430x_lc_sd_eabi_se.lib : int53.asm.obj (.int53)
 
 SYSNMI     0    0000fffc    00000002     
-                  0000fffc    00000002     rts430x_sc_sd_eabi_se.lib : int54.asm.obj (.int54)
+                  0000fffc    00000002     rts430x_lc_sd_eabi_se.lib : int54.asm.obj (.int54)
 
 .reset     0    0000fffe    00000002     
-                  0000fffe    00000002     rts430x_sc_sd_eabi_se.lib : boot.c.obj (.reset)
+                  0000fffe    00000002     rts430x_lc_sd_eabi_se.lib : boot.c.obj (.reset)
 
 $fill000   0    0000ff80    00000004     
                   0000ff80    00000004     --HOLE-- [fill = ffff]
@@ -230,18 +231,19 @@ MODULE SUMMARY
        ------                                   ----   -------   -------
     .\Sources\
        main.obj                                 358    0         0      
-       TA1.obj                                  154    12        8      
-       TA0.obj                                  62     66        4      
+       TA0.obj                                  62     60        4      
+       TA1.obj                                  108    12        5      
        event.obj                                0      0         6      
     +--+----------------------------------------+------+---------+---------+
-       Total:                                   574    78        18     
+       Total:                                   528    72        15     
                                                                         
-    C:\Users\ti451dre\AppData\Local\Temp\
-       {D5329E9E-0B1F-40A2-8988-603497CF926B}   0      4         0      
+    C:\Users\Timothy\AppData\Local\Temp\
+       {5B5E90E0-A0A2-497C-AE79-5C2E892D214B}   0      4         0      
     +--+----------------------------------------+------+---------+---------+
        Total:                                   0      4         0      
                                                                         
-    C:\ti\ccs1281\ccs\tools\compiler\ti-cgt-msp430_21.6.1.LTS\lib\rts430x_sc_sd_eabi_se.lib
+    C:\ti\ccs1281\ccs\tools\compiler\ti-cgt-msp430_21.6.1.LTS\lib\rts430x_lc_sd_eabi_se.lib
+       mult16_f5hw.asm.obj                      24     0         0      
        boot.c.obj                               20     2         0      
        isr_trap.asm.obj                         8      0         0      
        exit.c.obj                               6      0         0      
@@ -268,11 +270,11 @@ MODULE SUMMARY
        int53.asm.obj                            0      2         0      
        int54.asm.obj                            0      2         0      
     +--+----------------------------------------+------+---------+---------+
-       Total:                                   34     46        0      
+       Total:                                   58     46        0      
                                                                         
        Stack:                                   0      0         80     
     +--+----------------------------------------+------+---------+---------+
-       Grand Total:                             608    128       98     
+       Grand Total:                             586    122       95     
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -311,7 +313,7 @@ address   name
 00000712  ADC10MEM0_L           
 000004be  BCD2BIN               
 000004bc  BIN2BCD               
-0000c65a  C$$EXIT               
+0000c644  C$$EXIT               
 000008c0  CDCTL0                
 000008c1  CDCTL0_H              
 000008c0  CDCTL0_L              
@@ -706,7 +708,7 @@ address   name
 00000460  TB2EX0                
 0000046e  TB2IV                 
 00000450  TB2R                  
-0000c5f6  TIMER0_A1_ISR         
+0000c5c8  TIMER0_A1_ISR         
 0000c55c  TIMER1_A1_ISR         
 000005d0  UCA0ABCTL             
 000005c6  UCA0BRW               
@@ -825,7 +827,7 @@ address   name
 0000c200  __TI_CINIT_Base       
 0000c200  __TI_CINIT_Limit      
 0000c200  __TI_CINIT_Warm       
-0000c652  __TI_ISR_TRAP         
+0000c63c  __TI_ISR_TRAP         
 0000ffce  __TI_int31            
 0000ffd0  __TI_int32            
 0000ffd2  __TI_int33            
@@ -854,11 +856,12 @@ ffffffff  __TI_pprof_out_hndl
 ffffffff  __TI_prof_data_size   
 ffffffff  __TI_prof_data_start  
 ffffffff  __c_args__            
-0000c634  _c_int00_noinit_noargs
+0000c606  __mspabi_mpyi_f5hw    
+0000c61e  _c_int00_noinit_noargs
 0000fffe  _reset_vector         
 00001fb0  _stack                
-0000c648  _system_pre_init      
-0000c65a  abort                 
+0000c632  _system_pre_init      
+0000c644  abort                 
 0000c200  fram_ro_start         
 0000c200  fram_rw_start         
 0000c400  fram_rx_start         
@@ -1418,12 +1421,13 @@ address   name
 0000c400  fram_rx_start         
 0000c400  main                  
 0000c55c  TIMER1_A1_ISR         
-0000c5f6  TIMER0_A1_ISR         
-0000c634  _c_int00_noinit_noargs
-0000c648  _system_pre_init      
-0000c652  __TI_ISR_TRAP         
-0000c65a  C$$EXIT               
-0000c65a  abort                 
+0000c5c8  TIMER0_A1_ISR         
+0000c606  __mspabi_mpyi_f5hw    
+0000c61e  _c_int00_noinit_noargs
+0000c632  _system_pre_init      
+0000c63c  __TI_ISR_TRAP         
+0000c644  C$$EXIT               
+0000c644  abort                 
 0000ffce  __TI_int31            
 0000ffd0  __TI_int32            
 0000ffd2  __TI_int33            
@@ -1454,4 +1458,4 @@ ffffffff  __TI_prof_data_size
 ffffffff  __TI_prof_data_start  
 ffffffff  __c_args__            
 
-[584 symbols]
+[585 symbols]
