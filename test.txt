@@ -4,28 +4,95 @@ MCLK  := 4.0 MHz  => Vielfaches / 2.0
 ACLK  := 2.0 MHz  => Vielfaches / 4.0
 SMCLK := 0.5 MHz  => Vielfaches / 16.0
 
-=> Vielfaches der CLKs := 8.0 MHz
+=> Vielfaches der CLKs := 8.0 MHz <= DCO-Takt
 
  BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
 -------------------------------------------------------
 CSCTL1 [x][x][x][x][x][x][x][x][ ][x][x][x][x][ ][ ][x]
+=> CSCTL0 (DCO-Frequenzauswahl)
+=> ID := 2.0 => BIT 7|6 => 0|1
 
+ Steuerbit DCORSEL wird der High-/Low-Speed-Generator aktiviert
+(für MSP430FR5729 nur Low-Speed)
+
+ zwei Steuerbits DCOFSEL wird die DCO-Frequenz
+Low-Speed: (5,33 MHz, 6,67 MHz oder 8,00 MHz)
+High-Speed (16 MHz, 20 MHz oder 24 MHz) selektiert
+
+=> BIT 2 | 1 = 0 | 1 <= Low-Speed
+
+ BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
+-------------------------------------------------------
 CSCTL2 [x][x][x][x][x][ ][ ][ ][x][ ][ ][ ][x][ ][ ][ ]
 
+CSCTL2 (QUELLENWAHL)
+
+MCLK, ACLK und SMCLK ; Steuerbits SELM, SELA und
+SELS
+
+=> alle Clocks von DCO gespeist werden => 011b = DCOCLK
+
+BIT [10-8](SELA)&&[6-4](SELS)&&[2-0](SELM) := 011b    <= ansonsten:Teil1:23/67
+
+ BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
+-------------------------------------------------------
 CSCTL3 [x][x][x][x][x][ ][ ][ ][x][ ][ ][ ][x][ ][ ][ ]
 
+CSCTL3 (Steuerbits DIVM, DIVA, DIVS)
+Teiler_1 := 2   => 001b [10-8] <- DIVM
+Teiler_2 := 4   => 010b [2-0] <- DIVA
+Teiler_3 := 16  => 100b [6-4] <- DIVS
+L> ansonsten:Teil1:23/67
 
 A2:
-Zeitmessung: 270 Zeitmessung
-
+Zeitmessung: 270 ms <- Zielzeit
+von Oben: ACLK := 2.0 MHz
 Timer TA0 mit ACLK getaktet
 
+
+gesamt-Zeit := ACLK * 0.270 = 540_000 Ticks
+
+problem: 2**16 => 65_535 
+
+Da 2**16 nicht in Ticks => ACLK / bit-Teiler
+  Neue Frequenz := 125 kHz
+
+  => neue Anz benoetigter Ticks:  125_000 Hz * 0.270 = 33_750 Ticks
+
+  => CCR0 => 33_750 - 1 = 33_749
+
+    => bin(33_749) = 1000 0011 1101 0101    <= TA0CCR0
+
+ID in TAxCTL: {/1, /2, /4, /8}
+IDEX in TAxEX0: {/1, /2, /3, /4, /5, /6, /7, /8}
+
+//-----------------------------------------------//
+ACLK = 2.0 MHz
+Teilungsfaktor = 540_000
+Timer-Clock := 540_000 / 2**16 => 8.24 => 9 => {/2}{/5}
+// DA im MSP fast nur 2-er-Potenzen konnten => nächts hoehere 2-er-Potenz => 16 <= {/2}{/8}
+
+=> TA0EX0.IDEX := 8 [2-0] => 100b
+
+=> TA0CTL.ID := 2 [7|6] => 01b
+=> TA0CTL.TASSEL := [9|8] => 01b    <= ACLK
+=> TA0CTL.MC := [5|4] => 01 <- 01 := bis CCR0 dann auf 0; bei 00 Timer still
+
+=> TACLR := [2] => 1 (Enable Clock)
+=> TAIE := [1] => 1 (Enable Interrupt)
+=> TAIFG := [0] => 1 (Enable Interrupt Flag)
 
  BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
 -------------------------------------------------------
 TA0CTL [x][x][x][x][x][x][ ][ ][ ][ ][ ][ ][x][ ][ ][ ]
 
+
+ BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
+-------------------------------------------------------
 TA0EX0 [x][x][x][x][x][x][x][x][x][x][x][x][x][ ][ ][ ]
 
+
+ BIT  |15|14|13|12|11|10|09|08|07|06|05|04|03|02|01|00|
+-------------------------------------------------------
 TA0CCR0[ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
 
